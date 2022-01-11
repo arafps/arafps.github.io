@@ -58,6 +58,7 @@ li, a{
 
 #main {
   position: absolute;
+  font-size: 0.9rem;
 }
 
 #main a {
@@ -66,7 +67,9 @@ li, a{
 
 #arata {
   position: absolute;
-  left: 2.3%;
+  left: 2.5%;
+  font-size: 0.9rem;
+  top: 8px;
   transform: translate(-2.3%);
 }
 
