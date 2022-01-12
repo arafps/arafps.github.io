@@ -40,7 +40,8 @@ body {
   background-color: rgba(248, 8, 248, 0.952);
 }
 
-li, a{
+li,
+a {
   position: relative;
   top: 1%;
   color: rgba(255, 255, 255, 0.158);
@@ -53,7 +54,7 @@ li, a{
 
 .nav_links li {
   display: inline-block;
-  padding: 0px 20px ;
+  padding: 0px 20px;
 }
 
 #main {
@@ -67,9 +68,9 @@ li, a{
 
 #arata {
   position: absolute;
-  left: 2.5%;
+  left: 2.2%;
   font-size: 0.9rem;
-  top: 8px;
+  top: 0.9vh;
   transform: translate(-2.3%);
 }
 
@@ -77,8 +78,8 @@ a {
   transition: 0.5s;
 }
 
-#arata:hover a{
-  color: rgba(165, 7, 165, 0.952)
+#arata:hover a {
+  color: rgba(165, 7, 165, 0.952);
 }
 
 /* cute */
