@@ -48,7 +48,7 @@ body {
   top: 1%;
 }
 
-#arata a {
+#ara a {
   color: rgba(255, 255, 255, 0.158);
 }
 
@@ -76,7 +76,7 @@ a {
   color: rgba(248, 8, 248, 0.952);
 }
 
-#arata {
+#ara {
   position: absolute;
   left: 2.6%;
   top: 0.9vh;
@@ -87,7 +87,7 @@ a {
   transition: 0.5s;
 }
 
-#arata:hover a {
+#ara:hover a {
   color: rgba(165, 7, 165, 0.952);
 }
 
