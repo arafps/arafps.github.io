@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ara</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" media="screen" href="demo/css/style.css">
+  <link href="https://fonts.cdnfonts.com/css/horst-blackletter" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="icon" type="image/x-icon" href="/media/icon.png">
+
+  <style>
+    @import url('https://fonts.cdnfonts.com/css/horst-blackletter');
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    #message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: "Roboto", sans-serif; /* Apply 'Horst Blackletter' font */
+      font-size: 22px;
+      font-weight: 100;
+      font-style: normal;
+      color: white; /* Set the text color to be visible against the background */
+      text-shadow: 0 0 10px white; /* Add glow effect */
+      z-index: 2; /* Ensure the message is above snowflakes */
+      animation: blink 2.2s infinite; /* Apply blinking animation with a duration of 2 seconds */
+    }
+
+    #video-background {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      filter: blur(3px); /* Apply blur effect initially */
+      transition: filter 0.8s; /* Smooth transition for the blur effect */
+    }
+
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      filter: blur(10px); /* Apply blur effect initially */
+      transition: filter 0.8s; /* Smooth transition for the blur effect */
+    }
+
+    .content h1 {
+      user-select: none;
+      font-size: 200px;
+      margin: 0;
+      font-weight: 1;
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Add glow effect */
+    }
+
+    .content i {
+      font-size: 30px; /* Adjust size as needed */
+      margin-top: 20px; /* Adjust spacing from h1 */
+      margin-left: 0px; /* Adjust spacing between icons */
+      transition: transform 0.2s ease-out, text-shadow 0.3s ease-out; /* Smooth transitions for transform and text-shadow */
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Add glow effect */
+    }
+
+    .content i:hover {
+      transform: scale(1.2); /* Scale up on hover */
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.8); /* Lighter shadow on hover */
+    }
+
+    /* Footer styles */
+    footer {
+      user-select: none;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
+      padding: 30px 0;
+      font-size: 14px;
+      color: white; /* Ensure footer text color is white */
+      z-index: 1; /* Ensure footer appears above video background */
+      filter: blur(10px); /* Apply blur effect initially */
+      transition: filter 0.8s; /* Smooth transition for the blur effect */
+    }
+
+    footer p {
+      margin: 0;
+      color: white; /* Ensure footer text color is white */
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85); /* Semi-transparent background to reduce brightness */
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 24px;
+      transition: opacity 0.4s; /* Smooth transition for opacity */
+      opacity: 1; /* Initial opacity */
+    }
+
+    #overlay.hidden {
+      opacity: 0; /* Hide overlay */
+      visibility: hidden; /* Ensure it is not clickable when hidden */
+    }
+
+    #overlay-content {
+      position: relative; /* Ensure the text is positioned correctly */
+      z-index: 10; /* Ensure text is above the blurred background */
+      font-size: 36px; /* Adjust size as needed */
+      text-align: center; /* Center the text horizontally */
+      user-select: none; /* Prevent text selection */
+      opacity: 1; /* Initial opacity */
+      animation: blink 2.5s infinite; /* Apply blinking animation */
+
+      text-shadow: 0 0 10px white; /* Add glow effect */
+      
+    }
+
+    #overlay.hidden #overlay-content {
+      opacity: 0; /* Fade out the content when overlay is hidden */
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.2;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    #video-container {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="overlay">
+    <div id="overlay-content">
+      Press any key to enter
+    </div>
+  </div>
+  
+  <div id="video-container">
+    <video id="video-background" controls loop>
+      <source src="media/video 1080fA-r_ZGjiLc.mp4" type="video/mp4">
+      <!-- Add more sources for different video formats if needed -->
+      Your browser does not support the video tag.
+    </video>
+
+    <script>
+      var audio = document.getElementById("video-background");
+      audio.volume = 0.04;
+    </script>
+  </div>
+
+  <script>
+    // Function to remove overlay, remove blur, and play video
+    function removeOverlayAndPlayVideo() {
+      var overlay = document.getElementById('overlay');
+      var videoContainer = document.getElementById('video-container');
+      var video = document.getElementById('video-background');
+      var particlesJs = document.getElementById('particles-js');
+      var content = document.querySelector('.content');
+      var footer = document.querySelector('footer');
+      
+      overlay.classList.add('hidden'); // Hide the overlay with animation
+      particlesJs.style.filter = 'none'; // Remove blur effect
+      content.style.filter = 'none'; // Remove blur effect
+      footer.style.filter = 'none'; // Remove blur effect
+      videoContainer.style.display = 'block'; // Show the video container
+      video.play(); // Start playing the video
+    }
+
+    // Event listener for click
+    document.addEventListener('click', function() {
+      removeOverlayAndPlayVideo();
+    });
+
+    // Event listener for any key press
+    document.addEventListener('keydown', function() {
+      removeOverlayAndPlayVideo();
+    });
+  </script>
+
+  <!-- particles.js container -->
+  <div id="particles-js"></div>
+
+  <div class="content">
+    <h1>ARA</h1>
+    <a href="https://open.spotify.com/user/yu5mn1rbgzwzpik06wd8utxtv?si=cf4c28ad0ede4bac" target="_blank">
+      <i class='bx bxl-spotify' style="color: white;"></i>
+    </a>
+
+    <a href="https://x.com/araavlr" target="_blank">
+      <i class='bx bxl-twitter' style="margin-left: 15px; margin-right: 15px; color: white;"></i>
+    </a>
+
+    <a href="https://www.youtube.com/channel/UCtSyDYdUynwoK9O9G8W_-Qw" target="_blank">
+      <i class='bx bxl-youtube' style="color: white;"></i>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p> ara &copy; 2024</p>
+  </footer>
+
+  <!-- scripts -->
+  <script src="particles.js"></script>
+  <script src="/demo/js/app.js"></script>
+
+  <script>
+    var count_particles, stats, update;
+    stats = new Stats;
+    stats.setMode(0);
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.left = '0px';
+    stats.domElement.style.top = '0px';
+    document.body.appendChild(stats.domElement);
+    count_particles = document.querySelector('.js-count-particles');
+    update = function() {
+      stats.begin();
+      stats.end();
+      if (window.pJSDom && window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+        count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+      }
+      requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  </script>
+
+  <!-- right-click disable -->
+  <script>
+    document.addEventListener('contextmenu', event => {
+      event.preventDefault();
+    });
+  </script>
+</body>
+</html>
